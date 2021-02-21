@@ -1,0 +1,148 @@
+<?php 
+include_once 'connection.php';
+
+ ?>
+
+ <!DOCTYPE html>
+ <html>
+ <head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style type="text/css">
+		body{
+			padding: 200px;
+			margin-top: -200px;
+		}
+		.box{
+			padding: 300px;
+			margin-top: -250px;
+			border: 1px solid blue;
+		}
+		.button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+	</style>
+ 	<title></title>
+ </head>
+ <body>
+
+
+ 	<?php
+
+ 	$idS = $_GET['us'];
+ 	$showquery = "SELECT * FROM `student` WHERE username={$idS}";
+ 	$showdata = mysqli_query($conn,$showquery);
+
+ 	$bow = mysqli_fetch_array($showdata);  
+
+
+
+
+
+ 	if(isset($_POST['update']))
+	{	 
+
+
+	 	$us = $_POST['username'];
+		$pa = $_POST['password'];
+		$na = $_POST['name'];
+		$da = $_POST['date'];
+		$mo = $_POST['mobile'];
+		$vi = $_POST['village'];
+		$ex = $_POST['exam'];
+		$re = $_POST['remarks'];
+	 $sqlu = "UPDATE STUDENT SET username='$us', password='$pa',name='$na', doj='$da', mob='$mo',village='$vi', status='$ex', remark='$re' WHERE username=$us";
+	 if (mysqli_query($conn, $sqlu)) {
+		echo " record update successfully !";
+	 } else {
+		echo "Error: " . $sql . "
+" . mysqli_error($conn);
+	 }
+	 mysqli_close($conn);
+}
+
+
+ 	 ?>
+
+ 	<div  class="w3-container w3-blue">
+  <h2>Input Form</h2>
+</div>
+<div class="box">
+
+<form action="" method="POST" class="w3-container">
+  <p>
+  <label>Username</label>
+  <input class="w3-input" type="text"name="username" value="<?php echo $bow['username']; ?>"></p>
+  <p>
+  <label>Password</label>
+  <input class="w3-input" type="text" name="password" value="<?php echo $bow['password']; ?>"></p>
+  <p>
+  <label>Name</label>
+  <input class="w3-input" type="text" name="name" value="<?php echo $bow['name']; ?>"></p>
+  <p>
+  <label>Date of Join</label>
+  <input class="w3-input" type="text"name="date" value="<?php echo $bow['doj']; ?>"></p>
+  <p>
+  <label>Mobile</label>
+  <input class="w3-input" type="text" name="mobile" value="<?php echo $bow['mob']; ?>"></p>
+  <p>
+  <label>Village</label>
+  <input class="w3-input" type="text"name="village" value="<?php echo $bow['village']; ?>"></p>
+  <p>
+  <label>Exam Satus</label>
+  <input class="w3-input" type="text" name="exam" value="<?php echo $bow['status']; ?>"></p>
+  <p>
+  <label>Remarks</label>
+  <input class="w3-input" type="text" name="remarks" value="<?php echo $bow['remark']; ?>"></p>
+  <button class="button" name="update" style="vertical-align:middle"><span>UPDATE </span></button>
+
+</form>
+</div>
+
+
+
+
+	
+
+
+	<a href="Home.php">Home</a>
+ 
+ </body>
+ </html>
